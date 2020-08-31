@@ -1,0 +1,59 @@
+menuconfig FB_FMR
+	tristate "Fmr logiCVC frame buffer support"
+	depends on FB
+	default n
+	select FB_CFB_FILLRECT
+	select FB_CFB_COPYAREA
+	select FB_CFB_IMAGEBLIT
+	help
+	  Choose this option if you want to use the Fmr logiCVC as frame
+	  buffer device.
+
+choice
+	prompt "Fmr frame buffer driver type"
+	depends on FB_FMR
+	default FB_FMR_PLATFORM
+
+config FB_FMR_PLATFORM
+	bool "Fmr logiCVC frame buffer platform driver"
+	help
+	  Choose this option if you want to use the Fmr frame buffer driver
+	  as platform driver type. This is usefull if OpenFirmware support is
+	  not compiled in the kernel.
+	  This is default selection.
+
+config FB_FMR_OF
+	bool "Fmr logiCVC frame buffer Open Firmware driver"
+	help
+	  Choose this option if you want to use the Fmr frame buffer driver
+	  as Open Firmware driver type. Driver reads hardware configuration
+	  from Device Tree Blob binary file which must be loaded to
+	  system memory.
+endchoice
+
+config FB_FMR_PIXCLK
+	bool "Fmr logiCVC pixel clock"
+	depends on FB_FMR
+	default n
+	help
+	  logiCVC pixel clock generated from:
+	  - External generator not controllable by Fmr framebuffer driver
+	    This is default selection.
+	  - Generators controllable by Fmr framebuffer driver
+
+config FB_FMR_PIXCLK_ZYNQ_PS
+	bool "Zynq PS PLL pixel clock generator"
+	depends on FB_FMR && FB_FMR_PIXCLK
+	default n
+	help
+	  Support for controlling pixel clock generation from
+	  Zynq-PS internal PLL clock generator.
+
+config FB_FMR_PIXCLK_LOGICLK
+	bool "Fmr logiCLK pixel clock generator"
+	depends on FB_FMR && FB_FMR_PIXCLK
+	default n
+	help
+	  Support for controlling pixel clock generation from
+	  Fmr logiCLK FGPA IP core.
+
