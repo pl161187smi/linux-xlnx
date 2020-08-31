@@ -1195,11 +1195,11 @@ static void fmrfb_set_hw_specifics(struct fb_info *fbi,
 			fbi->var.transp.length = 8;
 
 		case LOGICVC_LAYER_ALPHA:
-			fbi->var.red.offset = 16;
+			fbi->var.red.offset = 0;
 			fbi->var.red.length = 8;
 			fbi->var.green.offset = 8;
 			fbi->var.green.length = 8;
-			fbi->var.blue.offset = 0;
+			fbi->var.blue.offset = 16;
 			fbi->var.blue.length = 8;
 			break;
 		}
